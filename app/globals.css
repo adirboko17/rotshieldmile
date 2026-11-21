@@ -646,6 +646,7 @@ legend.gap { margin-bottom: 12px; }
   padding: clamp(56px, 10vw, 112px) 24px;
 }
 .analyze h2 { margin: 0; font-size: clamp(24px, 3.4vw, 32px); font-weight: 700; color: #fff; }
+.ana-note { margin: -10px 0 0; font-size: 15px; color: var(--line); }
 .pct { font-size: clamp(64px, 11vw, 120px); line-height: 1; font-weight: 800; letter-spacing: -0.04em; }
 .count { font-variant-numeric: tabular-nums; }
 .ana-list { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; min-height: 120px; }
@@ -934,4 +935,13 @@ blockquote {
   .orbs, .header, .steps-bar, .nav, .toast-wrap, .fx, .noprint { display: none !important; }
   html, body, .page { background: #fff; }
   .card, .cv, .iv, .summary, .fit-card { break-inside: avoid; box-shadow: none; }
+  .aurora { display: none !important; }
+  .summary, .fit-card {
+    background: #e8f2fd;
+    color: var(--ink);
+    border: 1.5px solid #b9d6f5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .summary .eyebrow, .fit-card .eyebrow { color: var(--blue); }
 }

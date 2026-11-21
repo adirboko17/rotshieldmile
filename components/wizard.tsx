@@ -41,6 +41,7 @@ type State = Persisted & {
   err: Record<string, boolean>;
   studyFocus: boolean;
   anaI: number;
+  anaPct: number;
   editing: string | null;
   draft: string;
   busy: string | null;
@@ -102,6 +103,7 @@ function freshState(): State {
     err: {},
     studyFocus: false,
     anaI: 0,
+    anaPct: 0,
     editing: null,
     draft: "",
     busy: null,
@@ -180,13 +182,18 @@ function useApi(): Api {
 
   async function analyze() {
     const s = stateRef.current;
-    go({ step: 8, anaI: 0 });
+    const t0 = Date.now();
+    go({ step: 8, anaI: 0, anaPct: 0 });
     if (anaTick.current) window.clearInterval(anaTick.current);
     anaTick.current = window.setInterval(() => {
-      commit((p) => ({ ...p, anaI: Math.min(2, p.anaI + 1) }));
-    }, 1100);
+      const t = Date.now() - t0;
+      commit((p) => ({
+        ...p,
+        anaI: t > 9000 ? 2 : t > 3000 ? 1 : 0,
+        anaPct: Math.round(92 * (1 - Math.exp(-t / 9000))),
+      }));
+    }, 400);
     const base = fallback(s);
-    const t0 = Date.now();
     let result = base;
     let usedFallback = true;
     try {
@@ -209,8 +216,12 @@ function useApi(): Api {
     anaTimer.current = window.setTimeout(() => {
       if (anaTick.current) window.clearInterval(anaTick.current);
       if (stateRef.current.step !== 8) return;
-      go({ step: 9, result, usedFallback, decisions: {}, edits: {} });
-    }, Math.max(0, 3300 - (Date.now() - t0)));
+      commit((p) => ({ ...p, anaI: 3, anaPct: 100 }));
+      anaTimer.current = window.setTimeout(() => {
+        if (stateRef.current.step !== 8) return;
+        go({ step: 9, result, usedFallback, decisions: {}, edits: {} });
+      }, 900);
+    }, Math.max(0, 2400 - (Date.now() - t0)));
   }
 
   function next() {
@@ -1117,15 +1128,15 @@ function Examples() {
 
 function Analyzing() {
   const { state } = useW();
-  const pct = Math.round(((state.anaI + 1) / 3) * 100);
-  const shown = ANA_LINES.slice(0, state.anaI + 1);
+  const shown = ANA_LINES.slice(0, Math.min(ANA_LINES.length, state.anaI + 1));
   return (
     <section className="analyze" aria-live="polite">
       <Aurora opacity={0.6} />
       <div className="pct">
-        <Count value={pct} suffix="%" />
+        <Count value={state.anaPct} suffix="%" />
       </div>
       <h2>רגע, מנתחים את התשובות שלך</h2>
+      <p className="ana-note">זה לוקח בדרך כלל עד חצי דקה</p>
       <div className="ana-list">
         {shown.map((t, i) => {
           const done = i < state.anaI;
