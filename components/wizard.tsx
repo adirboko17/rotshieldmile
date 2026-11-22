@@ -35,6 +35,7 @@ import {
   type Persisted,
 } from "@/lib/model";
 import { Aurora, Count, Decrypt, FxLayer, Reveal, SplitText, burstConfetti } from "@/components/fx";
+import { Home } from "@/components/home";
 
 type State = Persisted & {
   vis: boolean;
@@ -442,24 +443,6 @@ function spot(e: MouseEvent<HTMLElement>) {
   e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
 }
 
-function Clock() {
-  return (
-    <svg className="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3C5896" strokeWidth="2" aria-hidden>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </svg>
-  );
-}
-
-function Warn({ color = "#9FD3FF" }: { color?: string }) {
-  return (
-    <svg className="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" aria-hidden style={{ marginTop: 2 }}>
-      <path d="M12 3l9 16H3z" />
-      <path d="M12 10v4M12 17h.01" />
-    </svg>
-  );
-}
-
 function LockIcon() {
   return (
     <svg className="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3C5896" strokeWidth="2" aria-hidden style={{ marginTop: 2 }}>
@@ -582,175 +565,7 @@ function Editable({
 
 function Welcome() {
   const { state, start, resume } = useW();
-  return (
-    <section>
-      <div className="hero">
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <div className="hero-text">
-              <h1 className="h1">
-                <SplitText text="מהניסיון במילואים" accent="ליתרון בקריירה" delay={120} stagger={90} shiny />
-              </h1>
-              <Reveal i={6}>
-                <p className="lead">
-                  ייתכן שבתקופת המילואים החמצת הזדמנויות מקצועיות. במקביל, צברת ניסיון ותרגלת יכולות שעשויות להיות רלוונטיות לעולם העבודה. נעזור לך לזהות אותן, לנסח אותן לקורות החיים ולהתכונן לראיונות.
-                </p>
-              </Reveal>
-            </div>
-            <Reveal i={8}>
-              <div className="cta-row">
-                <span className="glow">
-                  <button type="button" className="btn btn-lg btn-navy" onClick={start}>
-                    מתחילים <span aria-hidden="true">←</span>
-                  </button>
-                </span>
-                {state.saved ? (
-                  <button type="button" className="btn-outline" onClick={resume}>
-                    להמשיך מאיפה שעצרתי
-                  </button>
-                ) : null}
-                <span className="mins">
-                  <Clock />
-                  כ־10–15 דקות
-                </span>
-              </div>
-            </Reveal>
-          </div>
-          <div className="hero-icon" aria-hidden>
-            <Reveal i={3} y={80} dur={1100} className="hero-icon-inner">
-              <img src="/icon.png" alt="" />
-            </Reveal>
-          </div>
-        </div>
-        <div className="note" role="note">
-          <div className="note-inner">
-            <Warn />
-            <p>
-              <strong>חשוב:</strong> אין להזין מידע מסווג, פרטים מבצעיים או פרטים מזהים על אנשים אחרים. מספיק לתאר את סוג המשימות והאחריות שלך.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="landing">
-        <div className="block" id="how">
-          <Reveal>
-            <div className="block-head">
-              <span className="kicker">איך זה עובד</span>
-              <h2 className="h2">חמישה שלבים קצרים, מהשירות ועד לניסוח מוכן</h2>
-            </div>
-          </Reveal>
-          <div className="how">
-            {HOW.map(([n, t, d], i) => (
-              <Reveal key={n} i={i + 1} className={`how-item${i === 4 ? " last" : ""}`}>
-                <span className="num">{n}</span>
-                <strong>{t}</strong>
-                <span>{d}</span>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-        <div className="block" id="get">
-          <Reveal>
-            <div className="block-head">
-              <span className="kicker">מה מקבלים בסוף</span>
-              <h2 className="h2">הניסיון שלך בשפה שמעסיקים מבינים</h2>
-            </div>
-          </Reveal>
-          <div className="cards">
-            <Reveal i={1}>
-              <article className="card">
-                <div className="stack">
-                  <span className="card-k">תוצר ראשון</span>
-                  <h3>קורות החיים שלי</h3>
-                </div>
-                <div className="sample">
-                  <strong>ניהול ותעדוף משימות</strong>
-                  <p>
-                    <span style={{ fontWeight: 600, color: "#1E2E53" }}>מה עשית: </span>
-                    תיאום משימות בין גורמים שונים תוך התמודדות עם אילוצים משתנים.
-                  </p>
-                  <p className="line">״תיאום והובלת משימות מול מספר גורמים, תוך תעדוף פעילות, התאמה לשינויים ועמידה בלוחות זמנים.״</p>
-                </div>
-                <p className="fine">לכל מיומנות: מה תיארת שעשית, מה זה אומר בשפה מקצועית, למה זה רלוונטי לתפקיד וניסוח מוצע לקורות החיים.</p>
-              </article>
-            </Reveal>
-            <Reveal i={2}>
-              <article className="card-dark">
-                <div className="glow-blob" aria-hidden />
-                <div className="stack">
-                  <span className="card-k">תוצר שני</span>
-                  <h3>הכנה לראיון</h3>
-                </div>
-                <p className="ask">״מה מהניסיון שלך במילואים יכול לסייע לך בתפקיד הזה?״</p>
-                <div className="pills">
-                  {["מה היה המצב", "מה עשיתי", "מה קרה בעקבות זה", "מה למדתי"].map((p) => (
-                    <span key={p} className="pill">
-                      {p}
-                    </span>
-                  ))}
-                </div>
-                <p className="fine">שאלות ראיון אפשריות ותשובות מוצעות שמבוססות רק על מה שסיפרת. כלי הכנה, לא טקסט לשינון.</p>
-              </article>
-            </Reveal>
-          </div>
-        </div>
-        <div className="feature" id="principles">
-          <Reveal i={1} y={60} dur={1000}>
-            <div className="portrait">
-              <img src="/illus-principles.svg" alt="" />
-            </div>
-          </Reveal>
-          <div>
-            <Reveal>
-              <div className="block-head">
-                <span className="kicker">העיקרון שלנו</span>
-                <h2 className="h2">רק מה שבאמת עשית</h2>
-              </div>
-            </Reveal>
-            <div className="rules">
-              <Reveal i={1}>
-                <div className="rule">
-                  <strong>לא לפי שם התפקיד</strong>
-                  <span>מיומנות נקבעת לפי מה שתיארת שעשית, לא לפי התפקיד הצבאי.</span>
-                </div>
-              </Reveal>
-              <Reveal i={2}>
-                <div className="rule">
-                  <strong>בלי להמציא</strong>
-                  <span>לא נוסיף הישגים, תוצאות או מספרים שלא אמרת.</span>
-                </div>
-              </Reveal>
-              <Reveal i={3}>
-                <div className="rule">
-                  <strong>בשפה אזרחית</strong>
-                  <span>ניסוחים שמעסיקים מבינים, בלי מונחים צבאיים.</span>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-        <Reveal y={60} dur={1000}>
-          <div className="band">
-            <div className="band-photo">
-              <img src="/illus-band.svg" alt="" />
-            </div>
-            <div className="band-scrim" aria-hidden />
-            <div className="band-copy">
-              <div className="band-copy-inner">
-                <div className="stack">
-                  <h2>מוכנים להתחיל?</h2>
-                  <span className="mins-light">כ־10–15 דקות · נשמר אוטומטית</span>
-                </div>
-                <button type="button" className="btn btn-lg btn-white" onClick={start}>
-                  מתחילים <span aria-hidden="true">←</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
+  return <Home onStart={start} onResume={resume} saved={!!state.saved} />;
 }
 
 function Login() {
@@ -1406,6 +1221,7 @@ function TopNav() {
 function Shell() {
   const { state } = useW();
   const st = state.step;
+  const home = st === 0 && !state.login;
   const { stageIdx, pct, mins } = progressOf(state);
   const maxW = st === 0 ? "none" : st === 10 || st === 9 ? "880px" : st === 6 || st === 8 ? "720px" : "1120px";
   const showProgress = st > 0 && st < 10;
@@ -1418,8 +1234,8 @@ function Shell() {
         <div className="orb orb-b" />
         <div className="orb orb-c" />
       </div>
-      {st === 0 ? <TopNav /> : null}
-      <header id="top" className={`header noprint${st > 0 ? " bar" : " home"}`}>
+      {home ? <TopNav /> : null}
+      <header className={`header noprint bar${home ? " hide" : ""}`}>
         <div className="header-bar">
           <img className="logo" src="/logo-full.png" alt="מרכז אדמונד דה רוטשילד לחיבור השכלה גבוהה-תעסוקה" />
           {showProgress ? <span className="saved">נשמר אוטומטית</span> : null}

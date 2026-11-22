@@ -150,6 +150,27 @@ export function Count({ value, suffix = "" }: { value: number; suffix?: string }
   );
 }
 
+export function CountIn({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([en]) => {
+      if (!en?.isIntersecting) return;
+      io.disconnect();
+      setOn(true);
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <span ref={ref}>
+      <Count value={on ? value : 0} suffix={suffix} />
+    </span>
+  );
+}
+
 export function Aurora({ opacity = 0.55 }: { opacity?: number }) {
   const host = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLCanvasElement>(null);
