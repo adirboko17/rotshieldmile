@@ -1398,7 +1398,7 @@ function Shell() {
         <div className="orb orb-b" />
         <div className="orb orb-c" />
       </div>
-      <header className="header noprint">
+      <header className={`header noprint${st > 0 ? " bar" : ""}`}>
         <div className="header-bar">
           <img className="logo" src="/logo-full.png" alt="מרכז אדמונד דה רוטשילד לחיבור השכלה גבוהה-תעסוקה" />
           {showProgress ? <span className="saved">נשמר אוטומטית</span> : null}
