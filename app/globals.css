@@ -58,6 +58,55 @@ img { max-width: 100%; }
 .orb-b { width: 60vmax; height: 60vmax; right: -20vmax; top: -28vmax; background: radial-gradient(closest-side, rgba(28,154,255,.13), rgba(28,154,255,0)); }
 .orb-c { width: 34vmax; height: 34vmax; left: 30%; top: 40%; background: radial-gradient(closest-side, rgba(60,88,150,.13), rgba(60,88,150,0)); }
 
+html { scroll-behavior: smooth; }
+#how, #get, #principles { scroll-margin-top: 96px; }
+.topnav {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 3vw, 36px);
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  padding: 7px 7px 7px 7px;
+  padding-inline-start: 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid rgba(203, 214, 234, 0.8);
+  box-shadow: var(--shadow-lift);
+}
+.topnav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.topnav-brand img { height: 20px; width: auto; }
+.topnav-links { display: flex; gap: clamp(12px, 2.2vw, 28px); }
+.topnav-links a { font-size: 15px; color: #4f5d7e; text-decoration: none; white-space: nowrap; transition: color 0.15s; }
+.topnav-links a:hover { color: var(--blue); }
+.topnav-cta {
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 15px;
+  gap: 8px;
+  color: #fff;
+  background: var(--brand-grad);
+  box-shadow: var(--brand-shadow);
+}
+.topnav-cta:hover { background: var(--brand-grad-hover); }
+.header.home .header-bar { padding-top: clamp(84px, 9vw, 96px); }
+
 .header.bar {
   background: rgba(255, 255, 255, 0.72);
   -webkit-backdrop-filter: blur(12px);
@@ -944,7 +993,8 @@ blockquote {
 .ico { flex: none; }
 
 @media (max-width: 639px) {
-  .steps-wide, .saved { display: none; }
+  .steps-wide, .saved, .topnav-links { display: none; }
+  .topnav { gap: 14px; }
   .steps-narrow { display: block; }
   .side { position: static; }
   .hero-icon { order: -1; align-items: center; justify-content: flex-start; padding-bottom: 0; }

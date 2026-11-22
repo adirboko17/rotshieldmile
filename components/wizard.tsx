@@ -632,7 +632,7 @@ function Welcome() {
         </div>
       </div>
       <div className="landing">
-        <div className="block">
+        <div className="block" id="how">
           <Reveal>
             <div className="block-head">
               <span className="kicker">איך זה עובד</span>
@@ -649,7 +649,7 @@ function Welcome() {
             ))}
           </div>
         </div>
-        <div className="block">
+        <div className="block" id="get">
           <Reveal>
             <div className="block-head">
               <span className="kicker">מה מקבלים בסוף</span>
@@ -694,7 +694,7 @@ function Welcome() {
             </Reveal>
           </div>
         </div>
-        <div className="feature">
+        <div className="feature" id="principles">
           <Reveal i={1} y={60} dur={1000}>
             <div className="portrait">
               <img src="/illus-principles.svg" alt="" />
@@ -1383,6 +1383,26 @@ function Nav() {
   );
 }
 
+function TopNav() {
+  const { start } = useW();
+  return (
+    <nav className="topnav noprint" aria-label="ניווט ראשי">
+      <a className="topnav-brand" href="#top">
+        <img src="/icon.png" alt="" />
+        ממילואים לקריירה
+      </a>
+      <div className="topnav-links">
+        <a href="#how">איך זה עובד</a>
+        <a href="#get">מה מקבלים</a>
+        <a href="#principles">העיקרון שלנו</a>
+      </div>
+      <button type="button" className="btn topnav-cta" onClick={start}>
+        מתחילים <span aria-hidden="true">←</span>
+      </button>
+    </nav>
+  );
+}
+
 function Shell() {
   const { state } = useW();
   const st = state.step;
@@ -1398,7 +1418,8 @@ function Shell() {
         <div className="orb orb-b" />
         <div className="orb orb-c" />
       </div>
-      <header className={`header noprint${st > 0 ? " bar" : ""}`}>
+      {st === 0 ? <TopNav /> : null}
+      <header id="top" className={`header noprint${st > 0 ? " bar" : " home"}`}>
         <div className="header-bar">
           <img className="logo" src="/logo-full.png" alt="מרכז אדמונד דה רוטשילד לחיבור השכלה גבוהה-תעסוקה" />
           {showProgress ? <span className="saved">נשמר אוטומטית</span> : null}
